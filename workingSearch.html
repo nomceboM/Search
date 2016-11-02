@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<title></title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<link rel="stylesheet" href="http://localhost/configureSearch/tryGeojson/leaflet%20(1)/leaflet.css" />
+<link rel="stylesheet" href="http://localhost/configureSearch/tryGeojson/leaflet-search-master/leaflet-search-master/src/leaflet-search.css" />
+<link rel="stylesheet" href="http://localhost/configureSearch/tryGeojson/leaflet-search-master/leaflet-search-master/style.css" />
+</head>
+
+<body>
+<!--<h3><a href="../"><big>◄</big> Leaflet.Control.Search</a></h3> -->
+
+<h4>Simple Example: <em>search markers in layer by title</em></h4>
+<div id="map"></div>
+
+
+
+<script src="http://localhost/configureSearch/tryGeojson/leaflet%20(1)/leaflet.js"></script>
+<script src="http://localhost/configureSearch/tryGeojson/leaflet-search-master/leaflet-search-master/src/leaflet-search.js"></script>
+<script src="http://localhost/configureSearch/tryGeojson/leaflet-search-master/leaflet-search-master/examples/data/us-states.js"></script>
+<script>
+
+	//sample data values for populate map
+	var data = [
+		{"loc":[-32.767646,26.6390371], "Dikeni Disabled Self Help Ass"},
+		{"loc":[-32.7901325,26.8329509], "The Holy Nation of God"},
+		{"loc":[-32.7874356,26.8300864], "Alice Business Forum"},
+		{"loc":[-33.3164948,26.0738958], "Isolomzi Community Health Organisation"},
+		{"loc":[-30.9674799,27.5961071], "Barkley East Advice Office"},
+		{"loc":[-32.849876,27.4409557], "People fighting Gender based violence"},
+		{"loc":[-32.849876,27.4409557], "Khanyisa Comm Educare Development Centre"},
+		{"loc":[-30.9965862,26.330544], "Burgersdorp Community Resource and Legal Advice Office"}
+	];
+	
+	
+	//sample data values for populate map
+	/*var data = [
+		{"loc":[26.6390371,-32.767646], "title":"Dikeni Disabled Self Help Ass"},
+		{"loc":[26.8329509,-32.7901325], "title":"The Holy Nation of God"},
+		{"loc":[26.8300864,-32.7874356], "title":"Alice Business Forum"},
+		{"loc":[26.0738958,-33.3164948], "title":"Isolomzi Community Health Organisation"},
+		{"loc":[27.5961071,-30.9674799], "title":"Barkley East Advice Office"},
+		{"loc":[27.4409557,-32.849876], "title":"People fighting Gender based violence"},
+		{"loc":[27.4409557,-32.849876], "title":"Khanyisa Comm Educare Development Centre"},
+		{"loc":[26.330544,-30.9965862], "title":"Burgersdorp Community Resource and Legal Advice Office"}
+	];*/
+
+	//var map = new L.Map('map', {zoom: 6, center: new L.latLng(data[0].loc) });	//set center from first location
+    var map = new L.Map('map', {zoom: 5, center: new L.latLng([-29.436487, 24.854498]) });
+	map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));	//base layer
+
+	var markersLayer = new L.LayerGroup();	//layer contain searched elements
+	
+	map.addLayer(markersLayer);
+
+	var controlSearch = new L.Control.Search({
+		position:'topright',		
+		layer: markersLayer,
+		initial: false,
+		zoom: 15,
+		marker: false
+	});
+
+	map.addControl( controlSearch );
+
+	////////////populate map with markers from sample data
+	for(i in data) {
+		var title = data[i].title,	//value searched
+			loc = data[i].loc,		//position found
+			marker = new L.Marker(new L.latLng(loc), {title: title} );//se property searched
+		marker.bindPopup('title: '+ title );
+		markersLayer.addLayer(marker);
+	}
+
+</script>
+
+<script type="text/javascript" src="/labs-common.js"></script>
+
+</body>
+</html>
+
+
+	
+
+	
